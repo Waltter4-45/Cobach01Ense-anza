@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Quiz de Dispositivos Eléctricos</h1>
+    <form method="post">
+        {% for q in questions %}
+    {% set idx = loop.index0 %}
+    <div>
+        <p><strong>{{ loop.index }}. {{ q.pregunta }}</strong></p>
+        {% for opcion in q.opciones %}
+            <label>
+                <input type="radio" name="question_{{ idx }}" value="{{ opcion }}">
+                {{ opcion }}
+            </label><br>
+        {% endfor %}
+    </div>
+    <br>
+{% endfor %}
+        <button type="submit">Enviar</button>
+    </form>
+    <a href="{{ url_for('menu') }}">Volver al menú</a>
+
+    {% if results %}
+        <h2>Resultado</h2>
+        <p>Respuestas correctas: {{ results.correct_answers }} de {{ results.total_questions }}</p>
+        <p>Puntaje: {{ results.score }}%</p>
+    {% endif %}
+{% endblock %}

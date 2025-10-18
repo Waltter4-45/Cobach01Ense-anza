@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Archivero de Dispositivos Eléctricos</h1>
+
+    {# Lista de categorías únicas #}
+    {% set categorias = items | map(attribute='categoria') | unique | list %}
+
+    {% for categoria in categorias %}
+        <h2>{{ categoria }}</h2>
+        <ul>
+            {% for item in items if item.categoria == categoria %}
+                <li>
+                    <a href="{{ url_for('archive_detail', item_id=item.id) }}">{{ item.titulo }}</a>: {{ item.descripcion }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
+    <a href="{{ url_for('menu') }}">Volver al menú</a>
+{% endblock %}
